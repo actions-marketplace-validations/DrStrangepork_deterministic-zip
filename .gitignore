@@ -1,0 +1,10 @@
+# filesystem
+**/.DS_Store
+# IDEs
+.idea/
+.vscode/
+# Other
+target
+*.log
+*.bak
+deterministic-zip/
