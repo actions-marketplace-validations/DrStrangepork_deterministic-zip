@@ -1,11 +1,29 @@
-# syntax=docker/dockerfile:1
-FROM busybox:latest
-COPY --chmod=755 <<EOF /app/run.sh
-#!/bin/sh
-while true; do
-  echo -ne "The time is now $(date +%T)\\r"
-  sleep 1
-done
-EOF
+##
+## Build
+##
 
-ENTRYPOINT /app/run.sh
+FROM golang:1.20-alpine3.17 AS build
+
+WORKDIR /app
+
+COPY go.mod .
+COPY go.sum .
+RUN go mod download
+
+# Base package
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
+    go build -a -o deterministic-zip main.go
+
+
+##
+## Deploy
+##
+
+FROM alpine:3.17
+
+WORKDIR /
+
+COPY --from=build /app/deterministic-zip /deterministic-zip
+
+ENTRYPOINT ["/deterministic-zip"]

@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
+        name: Get latest release of timo-reymann/deterministic-zip
+        run: echo "latest_version=$(curl -Lso /dev/null -w %{url_effective} https://github.com/timo-reymann/deterministic-zip/releases/latest | grep -o '[^/]*$')" >> $GITHUB_ENV
+      -
         name: Checkout
         uses: actions/checkout@v3
       -
@@ -22,10 +25,18 @@ jobs:
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       -
+        name: Pull base repo timo-reymann/deterministic-zip
+        uses: appleboy/ssh-action@master
+        with:
+          script: |
+              git clone https://github.com/timo-reymann/deterministic-zip.git
+      -
         name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: deterministic-zip/
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/deterministic-zip-docker:latest
+          tags:
+          - ${{ secrets.DOCKERHUB_USERNAME }}/deterministic-zip-docker:latest
+          - ${{ secrets.DOCKERHUB_USERNAME }}/deterministic-zip-docker:${{ env.latest_version }}
