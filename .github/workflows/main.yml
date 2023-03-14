@@ -21,10 +21,11 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Pull base repo timo-reymann/deterministic-zip
-        uses: appleboy/ssh-action@master
+        uses: actions/checkout@v3
         with:
-          script: |
-            git clone https://${{ secrets.GH_TOKEN }}@github.com/timo-reymann/deterministic-zip.git
+          token: ${{ secrets.GH_TOKEN }}
+          repository: timo-reymann/deterministic-zip
+          path: deterministic-zip
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
