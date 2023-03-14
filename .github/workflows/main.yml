@@ -24,7 +24,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           script: |
-            git clone https://drstrangepork:${GITHUB_TOKEN}@github.com/timo-reymann/deterministic-zip.git
+            git clone https://${{ secrets.GH_TOKEN }}@github.com/timo-reymann/deterministic-zip.git
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
