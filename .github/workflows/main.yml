@@ -42,4 +42,4 @@ jobs:
             "Version=${{ env.latest_version }}"
             "BuildTime=${{ env.BuildTime }}"
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/deterministic-zip-docker:latest , ${{ secrets.DOCKERHUB_USERNAME }}/deterministic-zip-docker:${{ env.latest_version }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/deterministic-zip:latest , ${{ secrets.DOCKERHUB_USERNAME }}/deterministic-zip:${{ env.latest_version }}
