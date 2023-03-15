@@ -37,9 +37,6 @@ jobs:
         with:
           context: deterministic-zip/
           file: ./Dockerfile
-          build-args:
-            - GitSha=${{ env.GitSha }}
-            - Version=${{ env.latest_version }}
-            - BuildTime=${{ env.BuildTime }}
+          build-args: GitSha=${{ env.GitSha }} , Version=${{ env.latest_version }} , BuildTime=${{ env.BuildTime }}
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/deterministic-zip-docker:latest , ${{ secrets.DOCKERHUB_USERNAME }}/deterministic-zip-docker:${{ env.latest_version }}
