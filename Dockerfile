@@ -4,6 +4,8 @@
 
 FROM golang:1.19-alpine3.17 AS build
 
+ARG GitSha Version BuildTime
+
 WORKDIR /app
 
 COPY go.mod .
@@ -13,8 +15,8 @@ RUN go mod download
 # Base package
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
-    go build -o deterministic-zip main.go
-
+    go build -o deterministic-zip main.go -ldflags \
+        "-X github.com/timo-reymann/deterministic-zip/pkg/buildinfo.GitSha=${GitSha} -X github.com/timo-reymann/deterministic-zip/pkg/buildinfo.Version=${Version} -X github.com/timo-reymann/deterministic-zip/pkg/buildinfo.BuildTime=${BuildTime}"
 
 ##
 ## Deploy
