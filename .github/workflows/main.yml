@@ -26,6 +26,8 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
           repository: timo-reymann/deterministic-zip
           path: deterministic-zip
+          fetch-depth: 1
+          ref: ${{ env.latest_version }}
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
