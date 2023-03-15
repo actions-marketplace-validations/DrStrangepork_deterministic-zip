@@ -13,7 +13,7 @@ RUN go mod download
 # Base package
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
-    go build -a -o deterministic-zip main.go
+    go build -o deterministic-zip main.go
 
 
 ##
