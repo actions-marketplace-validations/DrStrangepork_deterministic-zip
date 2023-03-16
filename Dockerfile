@@ -18,6 +18,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
     go build -o deterministic-zip -ldflags \
         "-X github.com/timo-reymann/deterministic-zip/pkg/buildinfo.GitSha=${GitSha} -X github.com/timo-reymann/deterministic-zip/pkg/buildinfo.Version=${Version} -X github.com/timo-reymann/deterministic-zip/pkg/buildinfo.BuildTime=${BuildTime}" main.go
 
+
 ##
 ## Deploy
 ##
